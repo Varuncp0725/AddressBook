@@ -1,23 +1,21 @@
 #include <stdio.h>
 #include "file.h"
 
-void saveContactsToFile(AddressBook *addressBook){
+void saveContactsToFile(AddressBook *addressBook){  // saves all contacts to file before exit
 
     FILE *fp=fopen("contact.txt","w");
     fprintf(fp,"#%d\n",addressBook->contactCount);
-    // fprintf(fp,"%-10s %-20s %-20s %-30s\n", "Sl.No", "Name", "Phone", "Email");
     for(int i=0;i<addressBook->contactCount;i++){
-        fprintf(fp,"%-10d %s,%s,%s\n", i+1,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
+        fprintf(fp,"%s,%s,%s\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
     }
     fclose(fp);
 }
 
-void loadContactsFromFile(AddressBook *addressBook) {
-    int sl;
+void loadContactsFromFile(AddressBook *addressBook) {  // loads saved contacts from file into addressBook
     FILE *fp=fopen("contact.txt","r");
     fscanf(fp,"#%d\n",&addressBook->contactCount);
     for(int i=0;i<addressBook->contactCount;i++){
-    fscanf(fp,"%d %[^,],%[^,],%[^\n]",&sl,addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
+    fscanf(fp,"%[^,],%[^,],%[^\n]\n",addressBook->contacts[i].name,addressBook->contacts[i].phone,addressBook->contacts[i].email);
     }
     fclose(fp);
 }
